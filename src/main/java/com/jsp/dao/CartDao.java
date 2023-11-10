@@ -74,7 +74,7 @@ public class CartDao {
 		session.update(cart);
 		tranc.commit();
 		session.close();
-		return "Product removed Successfully...!" ;
+		return "Product removed Successfully...from the cart!" ;
 		
 	}
 	
