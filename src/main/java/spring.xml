@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+  <bean class="com.jsp.App">
+         <property name="productService" ref="productService"></property>
+                  <property name="cartService" ref="cartService"></property>
+         
+  
+    </bean>
+    
+    
+    <bean id="cartService" class="com.jsp.service.CartService">
+       <property name="cartDao" ref="cartDao"></property>
+       <property name="productDao" ref="productDao"></property>
+        
+    </bean>
+    
+     <bean id="productService" class="com.jsp.service.ProductService">
+         <property name="productDao" ref="productDao"></property>
+      
+    </bean>
+    
+    <bean id="cartDao" class="com.jsp.dao.CartDao">
+      
+    </bean>
+    
+    <bean id="productDao" class="com.jsp.dao.ProductDao">
+      
+    </bean>
+     
+     
+    
+    
+		
+   
+	
+	
+</beans>
