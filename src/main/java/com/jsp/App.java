@@ -2,7 +2,11 @@ package com.jsp;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jsp.dao.CartDao;
@@ -15,9 +19,12 @@ import com.jsp.service.ProductService;
  * Hello world!
  *
  */
+
+
+@Configuration
+@ComponentScan(basePackages = {"com.jsp"})
 public class App {
-	
-	
+
 	public static void main(String[] args) {
 		
 
@@ -28,7 +35,7 @@ public class App {
 		Scanner input = new Scanner(System.in);
 		int choice = input.nextInt();
 
-		ApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring.xml");
+		ApplicationContext applicationContext=new AnnotationConfigApplicationContext(App.class);
 		CartService cartService = applicationContext.getBean(CartService.class);
 		ProductService productService = applicationContext.getBean(ProductService.class);
 		switch (choice) {

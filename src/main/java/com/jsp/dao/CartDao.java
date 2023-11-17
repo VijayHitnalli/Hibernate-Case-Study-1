@@ -9,18 +9,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.jsp.entity.Cart;
 import com.jsp.entity.Product;
 
+@Repository
 public class CartDao {
-
-	Configuration cfg = new Configuration().configure().addAnnotatedClass(Cart.class).addAnnotatedClass(Product.class);;
-
-	SessionFactory sf = cfg.buildSessionFactory();
-
+	
+	Configuration configuration = new Configuration().configure().addAnnotatedClass(Product.class).addAnnotatedClass(Cart.class);
+	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	
 	public String createCart(Cart cart) {
-		Session session = sf.openSession();
+		Session session = sessionFactory.openSession();
 		Transaction tranc = session.beginTransaction();
 		session.save(cart);
 		tranc.commit();
@@ -28,7 +30,7 @@ public class CartDao {
 		return "Cart Created Successfully...!";
 	}
 	public Cart viewCarts(Cart cart) {
-		Session session = sf.openSession();
+		Session session = sessionFactory.openSession();
 		Transaction tranc = session.beginTransaction();
 		org.hibernate.Query<Cart> cartList=session.createQuery("from Cart");
 		List<Cart> list=cartList.list();
@@ -39,7 +41,7 @@ public class CartDao {
 		
 	}
 	public Cart viewProductsByCartId(int cartId) {
-		Session session = sf.openSession();
+		Session session = sessionFactory.openSession();
 		Transaction tranc = session.beginTransaction();
 		Cart cart = session.get(Cart.class, cartId);
 		List<Product> productsList=cart.getProducts();
@@ -51,7 +53,7 @@ public class CartDao {
 		
 	}
 	public String addProductToCart(Cart cart, int cartId, int productId) {
-		Session session = sf.openSession();
+		Session session =sessionFactory.openSession();
 		Transaction tranc = session.beginTransaction();
 		cart = session.get(Cart.class, cartId);
 		cart.getProducts().add(session.get(Product.class, productId));
@@ -64,13 +66,12 @@ public class CartDao {
 	}
 	@SuppressWarnings("deprecation")
 	public String removeProductFromCart(int CartId,int productId) {
-		Session session = sf.openSession();
+		Session session = sessionFactory.openSession();
 		Transaction tranc = session.beginTransaction();
+		Product product =session.get(Product.class, productId);
 		Cart cart = session.get(Cart.class, CartId);
-		List<Product> productsList=cart.getProducts();
-		for(Product product:productsList) {
-			session.remove(product.getProductId());
-		}
+		cart.getProducts().remove(product);
+		
 		session.update(cart);
 		tranc.commit();
 		session.close();

@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.hibernate.internal.build.AllowSysOut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jsp.dao.CartDao;
 import com.jsp.dao.ProductDao;
 import com.jsp.entity.Cart;
 import com.jsp.entity.Product;
 
+@Service
 public class CartService {
+	
+	@Autowired
 	private CartDao cartDao;
+	@Autowired
 	private ProductDao productDao;
 	
 	
@@ -29,7 +35,7 @@ public class CartService {
 	Cart cart= new Cart();
 	Product product = new Product();
 	Scanner input = new Scanner(System.in);
-	ProductService productService= new ProductService();
+	
 	
 
 	public void createCart() {

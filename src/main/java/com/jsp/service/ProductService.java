@@ -3,13 +3,28 @@ package com.jsp.service;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jsp.dao.ProductDao;
 import com.jsp.entity.Product;
 
+@Service
 public class ProductService {
-
+	
+	@Autowired
 	private ProductDao productDao;
 	
+	
+
+	public ProductDao getProductDao() {
+		return productDao;
+	}
+
+	public ProductService(ProductDao productDao) {
+		super();
+		this.productDao = productDao;
+	}
 
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
